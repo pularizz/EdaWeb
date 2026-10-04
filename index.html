@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EdaWeb – A modern glass browser for Windows</title>
+<meta name="description" content="EdaWeb is a modern Windows desktop browser with a glass interface, a clean fast experience and room to make it your own. Download the setup.">
+<meta name="theme-color" content="#0a0507">
+<meta property="og:title" content="EdaWeb – A modern glass browser for Windows">
+<meta property="og:description" content="A modern Windows desktop browser with a glass interface.">
+<meta property="og:image" content="logo.jpg">
+<link rel="icon" type="image/jpeg" href="logo.jpg">
+<style>
+:root{
+  --black:#050304; --near:#0d0709; --crimson:#7a0c1c; --red:#ff2a3d; --red-soft:#ff5565;
+  --text:#f4eeee; --muted:#b4a6a8;
+  --glass:rgba(255,255,255,.045); --line:rgba(255,255,255,.1); --line-red:rgba(255,42,61,.35);
+  --font:"Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{font-family:var(--font);background:var(--black);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--red-soft);outline-offset:3px;border-radius:10px}
+
+/* Background lights */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%,#1a070c 0%,var(--black) 60%)}
+.bg i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;will-change:transform}
+.bg i:nth-child(1){width:46vw;height:46vw;left:-12vw;top:-10vw;background:var(--crimson);animation:drift 22s ease-in-out infinite alternate}
+.bg i:nth-child(2){width:38vw;height:38vw;right:-10vw;top:30vh;background:#b0142b;opacity:.32;animation:drift 28s ease-in-out infinite alternate-reverse}
+.bg i:nth-child(3){width:30vw;height:30vw;left:30vw;bottom:-14vw;background:var(--crimson);opacity:.35;animation:drift 25s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(8vw,6vh) scale(1.15)}}
+
+/* Glass */
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:24px;
+  -webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 20px 60px rgba(0,0,0,.45)}
+
+/* Nav */
+.nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;width:min(960px,calc(100% - 24px));
+  display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 10px 14px;border-radius:999px;
+  animation:down .8s cubic-bezier(.2,.8,.2,1) both}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.2px}
+.brand img{width:34px;height:34px;border-radius:50%;box-shadow:0 0 14px rgba(255,42,61,.5)}
+.nav ul{list-style:none;padding:0;display:flex;gap:4px}
+.nav ul a{display:block;padding:8px 16px;border-radius:999px;color:var(--muted);font-size:.95rem;transition:.25s}
+.nav ul a:hover{color:#fff;background:rgba(255,42,61,.14)}
+@keyframes down{from{opacity:0;transform:translate(-50%,-20px)}}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 32px;border-radius:999px;font-weight:600;font-size:1.05rem;
+  border:1px solid var(--line);transition:transform .25s,box-shadow .25s,background .25s;cursor:pointer;font-family:inherit;color:#fff}
+.btn:hover{transform:translateY(-3px)}
+.btn-red,.download-button{background:linear-gradient(135deg,#ff3347,#c4112a);border-color:rgba(255,120,130,.5);
+  box-shadow:0 8px 30px rgba(255,42,61,.38),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-red:hover,.download-button:hover{box-shadow:0 12px 44px rgba(255,42,61,.65),inset 0 1px 0 rgba(255,255,255,.4)}
+.btn-glass{background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.btn-glass:hover{border-color:var(--line-red);box-shadow:0 8px 30px rgba(255,42,61,.2)}
+.download-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:18px 40px;border-radius:999px;font-weight:700;font-size:1.15rem;
+  border:1px solid rgba(255,120,130,.5);color:#fff;transition:transform .25s,box-shadow .25s}
+.download-button:hover{transform:translateY(-3px)}
+
+/* Hero */
+.wrap{width:min(1160px,calc(100% - 40px));margin-inline:auto}
+.hero{min-height:100vh;display:grid;grid-template-columns:1.02fr 1fr;align-items:center;gap:56px;padding:130px 0 80px}
+.hero h1{font-size:clamp(3.6rem,9vw,7rem);line-height:.95;font-weight:800;letter-spacing:-.04em;
+  background:linear-gradient(180deg,#fff 30%,#ff6a78 130%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 30px rgba(255,42,61,.28))}
+.hero p{max-width:30em;margin:26px 0 38px;color:var(--muted);font-size:1.2rem}
+.cta{display:flex;flex-wrap:wrap;gap:14px}
+.in{animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+.d1{animation-delay:.12s}.d2{animation-delay:.24s}.d3{animation-delay:.36s}.d4{animation-delay:.5s}
+@keyframes rise{from{opacity:0;transform:translateY(28px)}}
+
+/* Browser mockup */
+.stage{position:relative;display:grid;place-items:center;aspect-ratio:1/1}
+.sigil{position:absolute;width:112%;max-width:640px;border-radius:50%;opacity:.9;animation:spin 90s linear infinite;
+  -webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%);mix-blend-mode:screen}
+@keyframes spin{to{transform:rotate(360deg)}}
+.win{position:relative;width:96%;border-radius:20px;overflow:hidden;border-color:var(--line-red);
+  box-shadow:0 0 0 1px rgba(255,42,61,.12),0 0 70px rgba(255,42,61,.22),0 40px 80px rgba(0,0,0,.6);
+  background:rgba(14,7,10,.62);animation:float 7s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.bar{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.03)}
+.dots{display:flex;gap:6px}.dots b{width:11px;height:11px;border-radius:50%;background:#3a2a2d}
+.dots b:first-child{background:var(--red)}
+.tabs{display:flex;gap:6px;flex:1;min-width:0}
+.tab{padding:6px 14px;border-radius:10px 10px 0 0;font-size:.78rem;color:var(--muted);background:rgba(255,255,255,.04);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tab.on{color:#fff;background:rgba(255,42,61,.18);border:1px solid var(--line-red);border-bottom:0}
+.addr{margin:12px 14px;padding:9px 16px;border-radius:999px;background:rgba(0,0,0,.4);border:1px solid var(--line);font-size:.82rem;color:var(--muted)}
+.addr span{color:var(--red-soft)}
+.page{padding:6px 18px 22px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.page div{height:74px;border-radius:14px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,42,61,.07));border:1px solid var(--line)}
+.page div:first-child{grid-column:span 3;height:96px;display:flex;align-items:center;gap:14px;padding:0 18px;background:linear-gradient(120deg,rgba(255,42,61,.22),rgba(255,255,255,.04))}
+.page div:first-child img{width:48px;height:48px;border-radius:50%}
+.page div:first-child span{font-weight:700;font-size:1.3rem;letter-spacing:-.02em}
+
+/* Sections */
+section{padding:100px 0}
+.head{text-align:center;margin-bottom:56px}
+.head h2{font-size:clamp(2rem,4.5vw,3.2rem);letter-spacing:-.03em;line-height:1.1}
+.head p{color:var(--muted);margin:14px auto 0;max-width:34em;font-size:1.1rem}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{padding:32px 26px;transition:transform .35s,border-color .35s,box-shadow .35s;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--x,50%) var(--y,0%),rgba(255,42,61,.18),transparent 60%);opacity:0;transition:opacity .35s}
+.card:hover{transform:translateY(-8px);border-color:var(--line-red);box-shadow:0 26px 70px rgba(0,0,0,.55),0 0 40px rgba(255,42,61,.18)}
+.card:hover::before{opacity:1}
+.ico{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;margin-bottom:22px;position:relative;
+  background:linear-gradient(145deg,rgba(255,42,61,.28),rgba(122,12,28,.25));border:1px solid var(--line-red);box-shadow:0 0 22px rgba(255,42,61,.25)}
+.ico svg{width:26px;height:26px;stroke:#ff8a95;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:1.25rem;margin-bottom:8px;position:relative}
+.card p{color:var(--muted);font-size:.98rem;position:relative}
+
+/* Download */
+.dl{text-align:center;padding:72px 28px;position:relative;overflow:hidden;border-color:var(--line-red);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 0 90px rgba(255,42,61,.16),0 30px 80px rgba(0,0,0,.55)}
+.dl::after{content:"";position:absolute;left:50%;top:-40%;width:70%;height:80%;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(255,42,61,.28),transparent);pointer-events:none}
+.dl>*{position:relative;z-index:1}
+.dl img{width:84px;height:84px;border-radius:50%;margin:0 auto 24px;box-shadow:0 0 40px rgba(255,42,61,.55)}
+.dl h2{font-size:clamp(2rem,4.5vw,3.2rem);letter-spacing:-.03em;line-height:1.1}
+.dl p{color:var(--muted);max-width:32em;margin:16px auto 34px;font-size:1.1rem}
+.note{margin-top:22px;font-size:.9rem;color:var(--muted)}
+
+/* Footer */
+footer{border-top:1px solid var(--line);padding:38px 0 46px;margin-top:40px}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.foot .brand img{width:30px;height:30px}
+.foot .by{color:var(--red-soft);font-weight:600}
+.foot small{color:var(--muted)}
+
+/* Scroll reveal */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.show{opacity:1;transform:none}
+.grid .rv:nth-child(2){transition-delay:.08s}.grid .rv:nth-child(3){transition-delay:.16s}.grid .rv:nth-child(4){transition-delay:.24s}
+
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr;text-align:center;padding-top:120px;min-height:0;gap:30px}
+  .hero p{margin-inline:auto}.cta{justify-content:center}
+  .stage{max-width:540px;margin:0 auto;width:100%}
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .nav ul a{padding:8px 10px;font-size:.88rem}.brand span{display:none}
+  .grid{grid-template-columns:1fr}
+  .btn,.download-button{width:100%}
+  section{padding:70px 0}.foot{justify-content:center;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<nav class="nav glass" aria-label="Main navigation">
+  <a class="brand" href="#home" aria-label="EdaWeb home"><img src="logo.jpg" alt="EdaWeb logo" width="34" height="34"><span>EdaWeb</span></a>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#download">Download</a></li>
+  </ul>
+</nav>
+
+<main>
+<header id="home" class="wrap hero">
+  <div>
+    <h1 class="in">EdaWeb</h1>
+    <p class="in d1">A modern desktop browser for Windows. Clean glass design, a fast and focused experience, and settings that let you shape it your way.</p>
+    <div class="cta in d2">
+      <a class="btn btn-red" href="#download">Download Setup</a>
+      <a class="btn btn-glass" href="#features">Explore EdaWeb</a>
+    </div>
+  </div>
+  <div class="stage in d3" aria-hidden="true">
+    <img class="sigil" src="logo.jpg" alt="">
+    <div class="win glass">
+      <div class="bar">
+        <div class="dots"><b></b><b></b><b></b></div>
+        <div class="tabs"><span class="tab on">New tab</span><span class="tab">EdaWeb</span><span class="tab">+</span></div>
+      </div>
+      <div class="addr"><span>●</span> &nbsp;Search or enter address</div>
+      <div class="page">
+        <div><img src="logo.jpg" alt=""><span>EdaWeb</span></div>
+        <div></div><div></div><div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="features" class="wrap">
+  <div class="head rv">
+    <h2>Built to feel different</h2>
+    <p>Everything in EdaWeb is designed around a calm, modern browsing experience on Windows.</p>
+  </div>
+  <div class="grid">
+    <article class="card glass rv">
+      <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="M3 9h18M8 4v5"/></svg></div>
+      <h3>Glass UI</h3><p>Translucent panels, soft blur and subtle red light make every window feel layered and alive.</p>
+    </article>
+    <article class="card glass rv">
+      <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
+      <h3>Fast &amp; Clean</h3><p>A focused interface with no clutter, so pages and tools are always one click away.</p>
+    </article>
+    <article class="card glass rv">
+      <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></div>
+      <h3>Customizable</h3><p>Adjust the look and behavior of EdaWeb to match the way you like to browse.</p>
+    </article>
+    <article class="card glass rv">
+      <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18V8a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+      <h3>Modern tab experience</h3><p>Open, switch and organize tabs in a smooth, easy-to-read tab bar.</p>
+    </article>
+  </div>
+</section>
+
+<section id="download" class="wrap">
+  <div class="dl glass rv">
+    <img src="logo.jpg" alt="EdaWeb logo" width="84" height="84">
+    <h2>Download EdaWeb Setup</h2>
+    <p>Get the Windows installer and start browsing with EdaWeb in a few clicks.</p>
+    <!-- ================================================================
+         REPLACE "lk_setup" BELOW WITH YOUR REAL SETUP / DOWNLOAD URL
+         ================================================================ -->
+    <a href="lk_setup" class="download-button">Download Setup</a>
+    <p class="note">For Windows</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#home"><img src="logo.jpg" alt="EdaWeb logo" width="30" height="30"><span>EdaWeb</span></a>
+    <small>© <span id="y">2026</span> EdaWeb. All rights reserved.</small>
+    <small class="by">Created by Pulariz</small>
+  </div>
+</footer>
+
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('show');io.unobserve(x.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+document.querySelectorAll('.card').forEach(c=>c.addEventListener('pointermove',e=>{
+  const r=c.getBoundingClientRect();c.style.setProperty('--x',(e.clientX-r.left)+'px');c.style.setProperty('--y',(e.clientY-r.top)+'px');
+}));
+</script>
+</body>
+</html>
